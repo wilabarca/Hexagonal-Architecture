@@ -9,9 +9,9 @@ import (
 func RegisterAuthorRoutes(router *gin.Engine, AuthorController *controller.AuthorController){
     AuthorGroup := router.Group("/Author")
     {
-        AuthorGroup.GET("/", AuthorController.GetAllAuthors)
+        AuthorGroup.GET("", AuthorController.GetAllAuthors)
         AuthorGroup.GET("/:id", AuthorController.GetAuthorByID) 
-        AuthorGroup.POST("/", AuthorController.CreateAuthor)
+        AuthorGroup.POST("", AuthorController.CreateAuthor)
         AuthorGroup.PUT("/:id", AuthorController.UpdateAuthor)
         AuthorGroup.DELETE("/:id", AuthorController.DeleteAuthor)
     }

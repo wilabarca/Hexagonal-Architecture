@@ -31,12 +31,16 @@ func (c *AuthorController) CreateAuthor(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"message": "Author Created"})
+	// Devolver el autor creado, incluyendo el ID generado
+	ctx.JSON(http.StatusCreated, gin.H{
+		"message": "Author Created",
+		"author":  author, // Devuelves el autor con su ID generado
+	})
 }
 
 // Obtener todos los autores
 func (c *AuthorController) GetAllAuthors(ctx *gin.Context) {
-	authors, err := c.service.GetAllAuthor()
+	authors, err := c.service.GetAllAuthors()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -61,7 +65,6 @@ func (c *AuthorController) GetAuthorByID(ctx *gin.Context) {
     ctx.JSON(http.StatusOK, author)
 }
 
-
 // Actualizar un autor
 func (c *AuthorController) UpdateAuthor(ctx *gin.Context) {
     id := ctx.Param("id") 
@@ -79,16 +82,18 @@ func (c *AuthorController) UpdateAuthor(ctx *gin.Context) {
 
     author.ID = authorID
 
-     err = c.service.UpdateAuthor(&author)
+    err = c.service.UpdateAuthor(&author)
     if err != nil {
         ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return
     }
 
-    ctx.JSON(http.StatusOK, gin.H{"message": "Autor actualizado"})
+    // Devolver el autor actualizado
+    ctx.JSON(http.StatusOK, gin.H{
+		"message": "Autor actualizado",
+		"author":  author, // Devuelves el autor actualizado
+	})
 }
-
-
 
 // Eliminar un autor
 func (c *AuthorController) DeleteAuthor(ctx *gin.Context) {
@@ -107,4 +112,3 @@ func (c *AuthorController) DeleteAuthor(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "Author Deleted"})
 }
-
